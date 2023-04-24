@@ -24,11 +24,25 @@ const comparePass = async (req, res, next) => {
         // Error handeling if password don't match OR username doesn't exist in the database 
 
         // if they do match, continue to the controller
+        req.user = await User.findOne({where: {username: req.body.username}})      
+
+        if (req.user === null) {
+            throw new Error ("password or username doesn't match")
+        }
+        // let hashedPassword = req.user.password
+        const comparePassword = await bcrypt.compare(req.body.password, req.user.password)
+
+        if(!comparePassword){
+            throw new Error ("password or username doesn't match")
+        } 
+        
+        next()
     } catch (error) {
         res.status(501).json({errorMessage: error.message, error: error})
     }
 }
 
 module.exports = {
-    hashPass
+    hashPass,
+    comparePass
 }
