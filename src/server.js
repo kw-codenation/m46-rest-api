@@ -14,6 +14,7 @@ app.use(express.json())
 const syncTables = () => {
     User.sync()
 } 
+
 app.use(userRouter)
 
 app.get("/health", (req, res) => {
