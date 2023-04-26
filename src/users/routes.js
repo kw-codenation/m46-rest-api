@@ -11,6 +11,8 @@ userRouter.post("/users/login", comparePass, login)
 
 userRouter.get("/users/getUsers", tokenCheck, getAllUsers) // protected endpoint
 
+userRouter.get("/users/authCheck", tokenCheck, login)
+
 userRouter.put("/users/updateUser", updateUser)
 
 userRouter.delete("/users/deleteUser", deleteUser)
